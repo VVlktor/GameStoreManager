@@ -1,4 +1,6 @@
 
+using Scalar.AspNetCore;
+
 namespace GameStoreManager.Api
 {
     public class Program
@@ -18,6 +20,7 @@ namespace GameStoreManager.Api
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                app.MapScalarApiReference();
                 app.MapOpenApi();
             }
 
