@@ -7,6 +7,27 @@
         mc:Ignorable="d"
         Title="AuctionManagerView" Height="450" Width="800">
     <Grid>
-       
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Orientation="Vertical">
+            <Label FontSize="24" HorizontalAlignment="Center">Dodaj ofertę sprzedaży</Label>
+
+            <Label Margin="10,0">Oferty</Label>
+            <TextBox Text="{Binding GameOfferToAdd.Name}" Background="LightGray" Margin="10, 0" Padding="5"></TextBox>
+
+            <Label Margin="10,0">Platforma</Label>
+            <ComboBox Margin="10,0" Background="LightGray" SelectedItem="{Binding GameOfferToAdd.Platform}" ItemsSource="{Binding GamePlatformList}"></ComboBox>
+
+            <Label Margin="10,0">Cena</Label>
+            <TextBox Text="{Binding GameOfferToAdd.Price}" Background="LightGray" Margin="10, 0" Padding="5"></TextBox>
+
+            <Label Margin="10,0">Opis</Label>
+            <TextBox Text="{Binding GameOfferToAdd.Description}" Background="LightGray" Margin="10, 0" Padding="5"></TextBox>
+
+            <Button Command="{Binding PostAnOfferCommand}" Margin="10, 20" Padding="10" FontSize="20">Zamieść ofertę</Button>
+        </StackPanel>
+        
     </Grid>
 </Window>

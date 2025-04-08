@@ -23,7 +23,7 @@ namespace GameStoreManager.Client
             services.AddTransient<MainViewModel>();
             services.AddTransient<AuctionManagerView>();
             services.AddTransient<AuctionManagerViewModel>();
-            services.AddHttpClient<IGameApiService, GameApiService>(client => client.BaseAddress = new Uri("http://localhost:5207"));
+            services.AddHttpClient<IGameOffersApiService, GameOffersApiService>(client => client.BaseAddress = new Uri("http://localhost:5207"));
 
             ServiceProvider = services.BuildServiceProvider();
             var mainWindow = ServiceProvider.GetRequiredService<MainView>();
