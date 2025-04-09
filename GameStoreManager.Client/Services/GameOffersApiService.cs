@@ -3,7 +3,6 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
-using System.Xml.Linq;
 
 namespace GameStoreManager.Client.Services
 {
@@ -71,6 +70,16 @@ namespace GameStoreManager.Client.Services
 
             var updatedGameOffer = await response.Content.ReadFromJsonAsync<GameSaleOffer>();
             return updatedGameOffer!;
+        }
+
+        public async Task<bool> DeleteGameOffer(GameSaleOffer gameOffer)
+        {
+            var response = await _httpClient.DeleteAsync($"gameoffers/{gameOffer.Id}");
+
+            if (!response.IsSuccessStatusCode)
+                throw new HttpRequestException($"Request failed: {response.StatusCode}");
+
+            return response.IsSuccessStatusCode;
         }
     }
 }

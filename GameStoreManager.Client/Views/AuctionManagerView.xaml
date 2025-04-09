@@ -28,6 +28,38 @@
 
             <Button Command="{Binding PostAnOfferCommand}" Margin="10, 20" Padding="10" FontSize="20">Zamieść ofertę</Button>
         </StackPanel>
-        
+        <StackPanel Grid.Column="1">
+            <Label FontSize="22" HorizontalAlignment="Center">Edytuj lub usuń oferty</Label>
+
+            <Label>Oferta</Label>
+            <ComboBox Margin="10,0" Padding="5" Background="LightGray" ItemsSource="{Binding ListOfGameOffers}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedGameEdit}"></ComboBox>
+
+            <Label Margin="10,0">Nazwa</Label>
+            <TextBox Text="{Binding SelectedGameEdit.Name}" Margin="10,0" Padding="5" Background="LightGray"></TextBox>
+
+            <Label Margin="10,0">Platforma</Label>
+            <ComboBox SelectedItem="{Binding SelectedGameEdit.Platform}" ItemsSource="{Binding GamePlatformList}" Margin="10,0" Padding="5" Background="LightGray"></ComboBox>
+
+            <Label Margin="10,0">Opis</Label>
+            <TextBox Text="{Binding SelectedGameEdit.Description}" Margin="10,0" Padding="5" Background="LightGray"></TextBox>
+
+            <Label Margin="10,0">Cena</Label>
+            <TextBox Text="{Binding SelectedGameEdit.Price}" Margin="10,0" Padding="5" Background="LightGray"></TextBox>
+            <StackPanel Margin="10,0" Orientation="Horizontal">
+                <Label>Ostatnia data edycji: </Label>
+                <Label Content="{Binding SelectedGameEdit.LastAlterDate}"></Label>
+            </StackPanel>
+            
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Command="{Binding AlterAnOfferCommand}" Grid.Column="0" Margin="10,20,10,0" Height="40">Aktualizuj ofertę</Button>
+                <Button Command="{Binding DeleteOfferCommand}" Grid.Column="1" Margin="10,20,10,0" Height="40">Usuń ofertę</Button>
+            </Grid>
+            <Label Content="{Binding UnexpectedRightError}" HorizontalAlignment="Center"></Label>
+        </StackPanel>
     </Grid>
 </Window>

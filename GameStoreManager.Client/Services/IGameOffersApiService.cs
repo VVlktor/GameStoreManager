@@ -9,5 +9,6 @@ namespace GameStoreManager.Client.Services
         public Task<GameSaleOffer> AddGameOffer(GameSaleOffer game);
         public Task<List<GameSaleOffer>> GetAllGameOffers();
         public Task<GameSaleOffer> UpdateGameOffer(GameSaleOffer gameOffer);
+        public Task<bool> DeleteGameOffer(GameSaleOffer gameOffer);
     }
 }
