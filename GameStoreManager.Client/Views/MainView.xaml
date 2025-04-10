@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameStoreManager.Client.Views"
         mc:Ignorable="d"
-        Title="MainView" Height="450" Width="800">
+        Title="Strona główna" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -19,5 +19,8 @@
         </Grid.RowDefinitions>
         <TextBlock HorizontalAlignment="Center" FontSize="24" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center">Dodawanie, usuwanie i zarządzanie ofertami sprzedaży</TextBlock>
         <Button Command="{Binding GoToAuctionManagerCommand}" Grid.Column="0" Grid.Row="1" Margin="10" FontSize="24">Zarządzaj aukcjami</Button>
+        <TextBlock HorizontalAlignment="Center" FontSize="32" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0" TextWrapping="Wrap" TextAlignment="Center">Dane dotyczące sprzedaży</TextBlock>
+        <Button Command="{Binding GoToSalesManagerCommand}" Grid.Column="1" Grid.Row="1" Margin="10" FontSize="20">Wgląd w dane sprzedaży</Button>
+
     </Grid>
 </Window>

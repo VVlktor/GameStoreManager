@@ -24,7 +24,7 @@ namespace GameStoreManager.Api.Controllers
         }
 
         [HttpPost]
-        public ActionResult<GameSaleOffer> AddVideoGameOffer(GameSaleOffer newGame)
+        public ActionResult<GameSaleOffer> AddGameOffer(GameSaleOffer newGame)
         {
             if (newGame is null)
                 return BadRequest();
@@ -33,7 +33,7 @@ namespace GameStoreManager.Api.Controllers
             newGame.Id = GamesOffers.Count;//do usuniecia jak wprowadze ef
             GamesOffers.Add(newGame);
 
-            return CreatedAtAction(nameof(GetGameOfferById), new { id = newGame.Id }, newGame);
+            return Ok(newGame);
         }
 
         [HttpPut]
@@ -43,8 +43,9 @@ namespace GameStoreManager.Api.Controllers
                 return BadRequest();
 
             var giera = GamesOffers.FirstOrDefault(x => x.Id == gameSaleOffer.Id);
+
             if (giera is null)
-                return BadRequest();
+                return NotFound();
 
             giera.Description = gameSaleOffer.Description;
             giera.LastAlterDate = DateTime.Now;
@@ -60,7 +61,7 @@ namespace GameStoreManager.Api.Controllers
             var gra = GamesOffers.FirstOrDefault(x => x.Id == id);
 
             if(gra is null)
-                return BadRequest(false);
+                return NotFound(false);
 
             GamesOffers.Remove(gra);
 
