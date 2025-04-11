@@ -12,11 +12,10 @@ namespace GameStoreManager.Client.Services
         {
             _httpClient = httpClient;
         }
-
-
+        
         public async Task<List<Sale>> GetSalesFromPeriod(DateTime start, DateTime end)
         {
-            var response = await _httpClient.GetAsync("sales");
+            var response = await _httpClient.GetAsync($"Sales/{start.Date.ToString("yyyy-MM-dd")}T00:00:00Z/{end.Date.ToString("yyyy-MM-dd")}T23:59:59Z");
 
             if (!response.IsSuccessStatusCode)
                 throw new HttpRequestException($"Request failed: {response.StatusCode}");

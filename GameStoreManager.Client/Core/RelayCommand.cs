@@ -4,6 +4,9 @@ namespace GameStoreManager.Client.Core
 {
     public class RelayCommand : ICommand
     {
+        private ICommand? loadData;
+        private object canLoadData;
+
         public event EventHandler? CanExecuteChanged;
 
         private Action<object> _executeAction { get; set; }
@@ -15,6 +18,12 @@ namespace GameStoreManager.Client.Core
             _executeAction = exectue;
 
             _canExecutePredicate = canExecute;
+        }
+
+        public RelayCommand(ICommand? loadData, object canLoadData)
+        {
+            this.loadData = loadData;
+            this.canLoadData = canLoadData;
         }
 
         public bool CanExecute(object? parameter)
