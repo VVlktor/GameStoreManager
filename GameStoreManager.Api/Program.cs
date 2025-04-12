@@ -1,4 +1,6 @@
-
+using GameStoreManager.Api.Data;
+using GameStoreManager.Api.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
 namespace GameStoreManager.Api
@@ -15,8 +17,11 @@ namespace GameStoreManager.Api
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
-            var app = builder.Build();
+            builder.Services.AddDbContext<GameStoreDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddScoped<ISalesService, SalesService>();
+            builder.Services.AddScoped<IOffersService, OfferService>();
 
+            var app = builder.Build();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {

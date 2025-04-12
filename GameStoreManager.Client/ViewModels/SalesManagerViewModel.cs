@@ -5,7 +5,6 @@ using LiveCharts;
 using LiveCharts.Wpf;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace GameStoreManager.Client.ViewModels
@@ -47,7 +46,7 @@ namespace GameStoreManager.Client.ViewModels
         private async void LoadData(object obj)
         {
             List<Sale> sales = await _salesApiService.GetSalesFromPeriod(StartDate, EndDate);
-            
+
             DateTime timeToChange = StartDate.Date;
 
             SaleDate.Clear();

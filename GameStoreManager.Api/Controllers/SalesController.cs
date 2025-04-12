@@ -1,4 +1,5 @@
 ﻿using GameStoreManager.Api.Models;
+using GameStoreManager.Api.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameStoreManager.Api.Controllers
@@ -7,19 +8,24 @@ namespace GameStoreManager.Api.Controllers
     [Route("[controller]")]
     public class SalesController : Controller
     {
-        public static List<Sale> SalesList = new List<Sale>() { new() { Id=0, OfferId=1, DateOfPurchase=DateTime.Today.AddDays(-1) }, new() { DateOfPurchase=DateTime.Now.AddDays(10), Id=1, OfferId=3 } };
-        //zmienic statyczną liste na ef
-        [HttpGet("{startDate}/{endDate}")]
-        public ActionResult<List<Sale>> GetSalesFromPeriod(DateTime startDate, DateTime endDate)
+        private readonly ISalesService _salesService;
+
+        public SalesController(ISalesService salesService)
         {
-            IEnumerable<Sale> sales = SalesList.Where(x=>x.DateOfPurchase >= startDate && x.DateOfPurchase <= endDate);
+            _salesService = salesService;
+        }
+
+        [HttpGet("{startDate}/{endDate}")]
+        public async Task<ActionResult<List<Sale>>> GetSalesFromPeriod(DateTime startDate, DateTime endDate)
+        {
+            IEnumerable<Sale> sales = await _salesService.GetSalesFromPeriod(startDate, endDate);
             return Ok(sales);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Sale> GetSaleById(int id)
+        public async Task<ActionResult<Sale>> GetSaleById(int id)
         {
-            Sale sale = SalesList.FirstOrDefault(x => x.Id == id);
+            Sale sale = await _salesService.GetSaleById(id);
             if(sale is null)
                 return NotFound();
 
@@ -27,14 +33,14 @@ namespace GameStoreManager.Api.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Sale> AddSale(Sale sale)
+        public async Task<ActionResult<Sale>> AddSale(Sale sale)
         {
             if (sale is null)
                 return BadRequest();
 
             sale.DateOfPurchase = DateTime.Now;
 
-            SalesList.Add(sale);
+            await _salesService.AddSale(sale);
             return Ok(sale);
         }
 

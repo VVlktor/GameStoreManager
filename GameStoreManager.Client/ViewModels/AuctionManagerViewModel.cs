@@ -113,7 +113,7 @@ namespace GameStoreManager.Client.ViewModels
 
             try
             {
-                await _gameApiService.UpdateGameOffer(SelectedGameEdit);
+                SelectedGameEdit = await _gameApiService.UpdateGameOffer(SelectedGameEdit);
             }
             catch(HttpRequestException ex)
             {

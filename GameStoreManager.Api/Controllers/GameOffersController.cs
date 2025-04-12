@@ -1,4 +1,5 @@
-﻿using GameStoreManager.Client.Models;
+﻿using GameStoreManager.Api.Repositories;
+using GameStoreManager.Client.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameStoreManager.Api.Controllers
@@ -7,65 +8,62 @@ namespace GameStoreManager.Api.Controllers
     [Route("[controller]")]
     public class GameOffersController : ControllerBase
     {
-        public static List<GameSaleOffer> GamesOffers = new() { new() { Id=0, Name="Cyberpunk 2077", LastAlterDate= DateTime.Now,  Description="game made by cd project red", Platform="Playstation 4", Price=120 }, new() { Id=1, Name="The witcher 3", LastAlterDate = DateTime.Now.AddDays(1), Price =50, Description="Other game by cdpr", Platform="Playstation 5" } };
+        private readonly IOffersService _offerService;
+
+        public GameOffersController(IOffersService offerService)
+        {
+            _offerService = offerService;
+        }
+
+        public static List<GameSaleOffer> GamesOffers = new() { new() { Id = 0, Name = "Cyberpunk 2077", LastAlterDate = DateTime.Now, Description = "game made by cd project red", Platform = "Playstation 4", Price = 120 }, new() { Id = 1, Name = "The witcher 3", LastAlterDate = DateTime.Now.AddDays(1), Price = 50, Description = "Other game by cdpr", Platform = "Playstation 5" } };
 
         [HttpGet("{id}")]
-        public ActionResult<GameSaleOffer> GetGameOfferById(int id)
+        public async Task<ActionResult<GameSaleOffer>> GetGameOfferById(int id)
         {
-            if (GamesOffers.Any(x => x.Id == id))
-                return Ok(GamesOffers.FirstOrDefault(x => x.Id == id));
-            return BadRequest();
+            GameSaleOffer offer = await _offerService.GetGameOfferById(id);
+
+            if (offer is null)
+                return BadRequest();
+
+            return Ok(offer);
         }
 
         [HttpGet]
-        public ActionResult<GameSaleOffer> GetAllGameOffers()
+        public async Task<ActionResult<List<GameSaleOffer>>> GetAllGameOffers()
         {
-            return Ok(GamesOffers);
+            List<GameSaleOffer> list = await _offerService.GetAllGameOffers();
+            if (list is null)
+                return BadRequest();
+            return Ok(list);
         }
 
         [HttpPost]
-        public ActionResult<GameSaleOffer> AddGameOffer(GameSaleOffer newGame)
+        public async Task<ActionResult<GameSaleOffer>> AddGameOffer(GameSaleOffer newGame)
         {
             if (newGame is null)
                 return BadRequest();
 
-            newGame.LastAlterDate = DateTime.Now;
-            newGame.Id = GamesOffers.Count;//do usuniecia jak wprowadze ef
-            GamesOffers.Add(newGame);
-
-            return Ok(newGame);
+            return Ok(await _offerService.AddGameOffer(newGame));
         }
 
         [HttpPut]
-        public ActionResult<GameSaleOffer> UpdateGameOffer(GameSaleOffer gameSaleOffer)
+        public async Task<ActionResult<GameSaleOffer>> UpdateGameOffer(GameSaleOffer gameSaleOffer)
         {
-            if(gameSaleOffer is null)
+            if (gameSaleOffer is null)
                 return BadRequest();
 
-            var giera = GamesOffers.FirstOrDefault(x => x.Id == gameSaleOffer.Id);
+            GameSaleOffer updatedSaleOffer = await _offerService.UpdateGameOffer(gameSaleOffer);
 
-            if (giera is null)
-                return NotFound();
+            if (updatedSaleOffer is null)
+                return BadRequest();
 
-            giera.Description = gameSaleOffer.Description;
-            giera.LastAlterDate = DateTime.Now;
-            giera.Name = gameSaleOffer.Name;
-            giera.Platform = gameSaleOffer.Platform;
-            giera.Price = gameSaleOffer.Price;
-            return Ok(giera);
+            return Ok(updatedSaleOffer);
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<bool> DeleteGameOffer(int id)
+        public async Task<ActionResult<bool>> DeleteGameOffer(int id)
         {
-            var gra = GamesOffers.FirstOrDefault(x => x.Id == id);
-
-            if(gra is null)
-                return NotFound(false);
-
-            GamesOffers.Remove(gra);
-
-            return Ok(true);
+            return Ok(await _offerService.DeleteGameOffer(id));
         }
     }
 }
