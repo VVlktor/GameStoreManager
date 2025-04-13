@@ -44,6 +44,12 @@ namespace GameStoreManager.Api.Controllers
             return Ok(sale);
         }
 
-
+        [HttpPost("insertData")]
+        public async Task<ActionResult<bool>> InsertSampleData()
+        {
+            if(!(await _salesService.InsertSampleData()))
+                return BadRequest(false);
+            return Ok(true);
+        }
     }
 }

@@ -14,7 +14,7 @@
         <StackPanel Grid.Column="0" Orientation="Vertical">
             <Label FontSize="24" HorizontalAlignment="Center">Dodaj ofertę sprzedaży</Label>
 
-            <Label Margin="10,0">Oferty</Label>
+            <Label Margin="10,0">Nazwa oferty</Label>
             <TextBox Text="{Binding GameOfferToAdd.Name}" Background="LightGray" Margin="10, 0" Padding="5"></TextBox>
 
             <Label Margin="10,0">Platforma</Label>

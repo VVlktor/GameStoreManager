@@ -95,8 +95,11 @@ namespace GameStoreManager.Client.ViewModels
             try
             {
                 GameSaleOffer offer = await _gameApiService.AddGameOffer(GameOfferToAdd);
-                if(offer is not null)
-                    ListOfGameOffers.Add(offer);
+                if (offer is null)
+                    return;
+
+                ListOfGameOffers.Add(offer);
+                GameOfferToAdd = new();
             }
             catch(Exception ex)
             {

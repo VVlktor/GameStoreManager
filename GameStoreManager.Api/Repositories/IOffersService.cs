@@ -9,5 +9,6 @@ namespace GameStoreManager.Api.Repositories
         public Task<GameSaleOffer> AddGameOffer(GameSaleOffer newGame);
         public Task<GameSaleOffer> UpdateGameOffer(GameSaleOffer gameSaleOffer);
         public Task<bool> DeleteGameOffer(int id);
+        public Task<bool> InsertSampleData();
     }
 }

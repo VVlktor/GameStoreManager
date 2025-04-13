@@ -65,5 +65,13 @@ namespace GameStoreManager.Api.Controllers
         {
             return Ok(await _offerService.DeleteGameOffer(id));
         }
+
+        [HttpPost("insertData")]
+        public async Task<ActionResult<bool>> InsertSampleData()
+        {
+            if(!(await _offerService.InsertSampleData()))
+                return BadRequest(false);
+            return Ok(true);
+        }
     }
 }
